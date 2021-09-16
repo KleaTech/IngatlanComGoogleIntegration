@@ -7,4 +7,4 @@ Integrate Google Maps into Ingatlan.hu. When you open a page with a real estate 
 
 *NOTE:* You need to register to Google Maps Platform and use your own API key. Registration is free. The usage of the route planner API is NOT free, but every user gets a free $200 monthly quota. So any reasonable private use will be for free.
 
-![example image](https://github.com/KleaTech/IngatlanHuGoogleIntegration/raw/master/exampleImg.png "Example")
+![example image](https://github.com/KleaTech/IngatlanHuGoogleIntegration/raw/main/exampleImg.PNG "Example")
