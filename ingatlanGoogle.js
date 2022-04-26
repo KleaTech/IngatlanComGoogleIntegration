@@ -39,6 +39,16 @@ async function findPlace(place) {
   });
 }
 
+function markLocation(map, place) {
+  if (markLocation.last) markLocation.last.setMap(null);
+  map.setCenter(place.location);
+  markLocation.last = new google.maps.Marker({
+    position: place.location,
+    map,
+    title: place.formatted_address,
+  });
+}
+
 function getBounds(foundPlace) {
   const bounds = new google.maps.LatLngBounds();
   if (foundPlace.viewport) bounds.union(foundPlace.viewport);
@@ -72,8 +82,7 @@ function getRouteSpecs(route) {
 }
 
 setTimeout(async () => {
-  const address = document.getElementsByClassName("address")[0].textContent;
-  if (!address) return;
+  const address = document.getElementsByClassName("card-title")[0]?.textContent;
   await loadMap();
   const containerDiv = document.createElement("div");
   containerDiv.id = "ingatlan-terkep"
@@ -104,6 +113,15 @@ setTimeout(async () => {
     center: { lat: -34.397, lng: 150.644 },
     zoom: 8,
   });
+  let lastAddr;
+  document.querySelectorAll(".listing__address")?.forEach(l => l.addEventListener("mouseenter", async a => {
+    if (lastAddr == a.target.textContent) return;
+      lastAddr = a.target.textContent;
+    const addr = await findPlace(lastAddr);
+    markLocation(map, addr);
+    statsPlaceholder.textContent = lastAddr;
+  }));
+  if (!address) return;
   const pest = await findPlace("Práter street 1, Budapest");
   const dest = await findPlace(address);
   const foundRoute = await route(pest, dest);
