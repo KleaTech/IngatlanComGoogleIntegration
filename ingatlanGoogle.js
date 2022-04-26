@@ -82,6 +82,9 @@ function getRouteSpecs(route) {
 }
 
 setTimeout(async () => {
+  let updatedAt = document.createElement("span");
+  updatedAt.innerText = new Date(JSON.parse(document.querySelector("[data-listing]").getAttribute("data-listing")).updatedAt).toLocaleString("hu-HU");
+  document.querySelector(".card-title").parentElement.appendChild(updatedAt);
   const address = document.getElementsByClassName("card-title")[0]?.textContent;
   await loadMap();
   const containerDiv = document.createElement("div");
